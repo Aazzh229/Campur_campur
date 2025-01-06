@@ -135,23 +135,26 @@ void resize(int width, int height)
 
 void display(void)
 {
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); // MEMBERSIHKAN LAYAR LATAR BELAKANG
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // MEMBERSIHKAN LAYAR LATAR BELAKANG
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // Terapkan translasi berdasarkan posisi yang diperbarui
-    glTranslatef(translateX, translateY, -70);
-    
+    glTranslatef(0.0, 0.0, -70);
+
     cartesius();
+    glPushMatrix();
+    glTranslated(0.0, -3.0, 0.0);
     meja();
-	glPushMatrix();
+    glPopMatrix();
+    glPushMatrix();
+
+    // Terapkan translasi berdasarkan posisi yang diperbarui
+    glTranslatef(translateX, translateY, -10);
     glScalef(scaleFactor, scaleFactor, scaleFactor); // Terapkan skala
-    
-    glRotatef(270,1.0,0.0,0.0);
+    glRotatef(270, 1.0, 0.0, 0.0);
     kipas();
     glPopMatrix();
-   
-    
+
     glutSwapBuffers();
 }
 
