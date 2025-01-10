@@ -6,6 +6,7 @@ void cylinder(float rbase, float rtop, float height);
 void blok(float tebal, int ratiol, int ratiop);
 void bilah (float r_inner, float r_outer, float tebal, int batang);
 void kipas();
+void hiddencarte();
 
 int screen_width=600; // inisialisasi lebar screen
 int screen_height=400; // inisialisasi tinggi screen
@@ -13,6 +14,8 @@ int button_up=0, button_down=0;
 int Turn=0;
 float xPos = 1.0;
 float yPos = 1.0;
+float scaleCube =70.0;
+bool hidden = false;
 
 double rotation_y=0, rotation_y_plus=-15, direction; // merubah rotasi
 double Rhead=0, Rheadplus=0;
@@ -41,18 +44,88 @@ GLfloat source_light[]={0.9,0.5,0.7,1.0};
 GLfloat light_pos[]={3.0,0.0,6.0,1.0};
 
 void cartesius() {
-    glColor3f(0.1, 0.0, 1.0);
-    glBegin(GL_LINES);
-    glVertex3f(-10.0, 0.0, 0.0);
-    glVertex3f(10.0, 0.0, 0.0);
-    glVertex3f(0.0, -10.0, 0.0);
-    glVertex3f(0.0, 10.0, 0.0);
-    glVertex3f(0.0, 0.0, -10.0);
-    glVertex3f(0.0, 0.0, 10.0);
+	glBegin(GL_LINES);
+    
+
+    // Garis sumbu X (merah)
+    glColor3f(1.0, 0.0, 0.0); // Warna merah
+    glVertex3f(-100.0, 0.0, 0.0); // Dari titik (-50, 0, 0)
+    glVertex3f(100.0, 0.0, 0.0);  // Ke titik (50, 0, 0)
+
+    // Garis sumbu Y (hijau)
+    glColor3f(0.0, 1.0, 0.0); // Warna hijau
+    glVertex3f(0.0, -100.0, 0.0); // Dari titik (0, -50, 0)
+    glVertex3f(0.0, 100.0, 0.0);  // Ke titik (0, 50, 0)
+
+    // Garis sumbu Z (biru)
+    glColor3f(0.0, 0.0, 1.0); // Warna biru
+    glVertex3f(0.0, 0.0, 100.0); // Dari titik (0, 0, -50)
+    glVertex3f(0.0, 0.0, -100.0);  // Ke titik (0, 0, 50)
+
     glEnd();
 }
 
-// menggambar meja
+void hiddencarte(){
+	if (hidden){
+		cartesius();
+	}
+}
+
+void Cube() {
+    glPushMatrix(); 
+	glDisable(GL_LIGHTING);
+    glScalef(scaleCube, scaleCube, scaleCube); // Terapkan skala pada kubus
+	glBegin(GL_QUADS); // Memulai menggambar kubus
+	
+    glColor3f(1.0, 0.0, 0.0); // Merah
+    glVertex3f(-1.0, -1.0,  1.0);
+    glVertex3f( 1.0, -1.0,  1.0);
+    glVertex3f( 1.0,  1.0,  1.0);
+    glVertex3f(-1.0,  1.0,  1.0);
+
+    // Sisi belakang
+    glColor3f(0.0, 1.0, 0.0); // Hijau
+    glVertex3f(-1.0, -1.0, -1.0);
+    glVertex3f(-1.0,  1.0, -1.0);
+    glVertex3f( 1.0,  1.0, -1.0);
+    glVertex3f( 1.0, -1.0, -1.0);
+
+    // Sisi kiri
+    glColor3f(0.0, 0.0, 1.0); // Biru
+    glVertex3f(-1.0, -1.0, -1.0);
+    glVertex3f(-1.0, -1.0,  1.0);
+    glVertex3f(-1.0,  1.0,  1.0);
+    glVertex3f(-1.0,  1.0, -1.0);
+
+    // Sisi kanan
+    glColor3f(1.0, 1.0, 0.0); // Kuning
+    glVertex3f( 1.0, -1.0, -1.0);
+    glVertex3f( 1.0,  1.0, -1.0);
+    glVertex3f( 1.0,  1.0,  1.0);
+    glVertex3f( 1.0, -1.0,  1.0);
+
+	// Sisi atas
+    glColor3f(1.0, 0.5, 0.5); // Merah muda
+    glVertex3f(-1.0,  1.0, -1.0);
+    glVertex3f(-1.0,  1.0,  1.0);
+    glVertex3f( 1.0,  1.0,  1.0);
+    glVertex3f( 1.0,  1.0, -1.0);
+
+    // Sisi bawah
+    glColor3f(0.5, 0.5, 0.5); // Abu-abu
+    glVertex3f(-1.0, -1.0, -1.0);
+    glVertex3f( 1.0, -1.0, -1.0);
+    glVertex3f( 1.0, -1.0,  1.0);
+    glVertex3f(-1.0, -1.0,  1.0);
+
+    glEnd(); // Mengakhiri menggambar kubus
+
+
+    glPopMatrix(); 
+    glEnable(GL_LIGHTING);
+}
+
+
 void meja(){
 	// mengatur transformasi
 	glPushMatrix();
@@ -64,6 +137,7 @@ void meja(){
 	// alas meja 
 	
 	glPushMatrix();
+	glColor3d(0.88, 0.72, 0.53);
 	glTranslated(0.0, 0.0, 0.0);
 	glScaled(1.5, 0.2, 1.6);
 	glutSolidCube(10);
@@ -105,7 +179,9 @@ void init(void)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45.0f,(GLfloat)screen_width/(GLfloat)screen_height,1.0f,1000.0f);
-
+	gluLookAt(5.0, 5.0, 5.0,   // Posisi kamera (x,y,z)
+              0.0, 0.0, 0.0,   // Titik yang dilihat (x,y,z)
+              0.0, 1.0, 0.0);  // Vektor up (x,y,z
     glEnable(GL_DEPTH_TEST);
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     glEnable(GL_LIGHTING);
@@ -138,27 +214,30 @@ void display(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // MEMBERSIHKAN LAYAR LATAR BELAKANG
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
+    
     glTranslatef(0.0, 0.0, -70);
-
-    cartesius();
     glPushMatrix();
     glTranslated(0.0, -3.0, 0.0);
-    meja();
+	hiddencarte();
+    
+	meja();
     glPopMatrix();
     glPushMatrix();
-
+ 	Cube();   
     // Terapkan translasi berdasarkan posisi yang diperbarui
     glTranslatef(translateX, translateY, -10);
     glScalef(scaleFactor, scaleFactor, scaleFactor); // Terapkan skala
     glRotatef(270, 1.0, 0.0, 0.0);
+    
     kipas();
     glPopMatrix();
+
 
     glutSwapBuffers();
 }
 
 void kipas(){
+	glTranslatef(0.0, 0.0, 0.0);
 	glPushMatrix();
 
     cylinder(2.5, 1.5, 16); // silinder batang bawah 2
@@ -480,18 +559,16 @@ void keyboard_s(unsigned char key, int x,     int y)
     case 'e': // rotasi ke kanan
     	rotateY += 5.0f;
     	break;
-    	
-    case 'r': // rotasi ke atas
-    	rotateX -= 5.0f;
-    	break;
-    	
-    case 'f': // rotasi ke bawah
-    	rotateX += 5.0f;
-    	break;
-
-    case 27: // Escape key to exit
-        exit(0);
+    case '+': 
+        scaleCube += 1.0f;
         break;
+    case '-':
+    	if (scaleCube > 1.0f) // pastikan skala tidak negatif
+            scaleCube -= 1.0f; 
+            break;
+    case 'h':
+    	hidden= !hidden;
+    	break;
     }
     glutPostRedisplay();
 }
