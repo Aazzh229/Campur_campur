@@ -2,80 +2,74 @@
 #include <math.h>
 #include <stdio.h>
 
-void cylinder(float rbase, float rtop, float height);
-void blok(float tebal, int ratiol, int ratiop);
-void bilah (float r_inner, float r_outer, float tebal, int batang);
-void kipas();
-void hiddencarte();
+void cylinder(float rbase, float rtop, float height); //ai
+void blok(float tebal, int ratiol, int ratiop); // ai
+void bilah (float r_inner, float r_outer, float tebal, int batang); // ai
+void kipas(); // ai
+void hiddencarte(); //ai
 
-int screen_width=600; // inisialisasi lebar screen
-int screen_height=400; // inisialisasi tinggi screen
-int button_up=0, button_down=0;
-int Turn=0;
-float xPos = 1.0;
-float yPos = 1.0;
-float scaleCube =70.0;
-bool hidden = false;
+int screen_width=600; // lebar screen ai
+int screen_height=400; // tinggi screen ai
+int button_up=0, button_down=0; // ai
+int Turn=0; //ai
+float scaleCube =70.0; //desti
+bool hidden = false; //ai
 
-double rotation_y=0, rotation_y_plus=-15, direction; // merubah rotasi
-double Rhead=0, Rheadplus=0;
-double Angguk=0, Anggukplus=0;
-double press=0, pressplus, pressplus1=180, pressplus2=0, pressplus3=0, pressplus4=0, pressplus5=0;
+double rotation_y=0, rotation_y_plus=-15, direction; // merubah rotasi ai
+double Rhead=0, Rheadplus=0; // ai
+double Angguk=0, Anggukplus=0; // ai
+double press=0, pressplus, pressplus1=180, pressplus2=0, pressplus3=0, pressplus4=0, pressplus5=0; //ai
 
-bool Toleh = true, Tolehpress=true;
-bool RightTurn=true;
-bool speed1=true, speed2=false, speed3=false, speed4=false, speed5=false;
+bool Toleh = true, Tolehpress=true; //ai
+bool RightTurn=true; //ai
+bool speed1=true, speed2=false, speed3=false, speed4=false, speed5=false; //ai
 
 // Variabel untuk skala
-float scaleFactor = 1.0; // Faktor skala
+float scaleFactor = 1.0; // desti
 
 // Variabel untuk translasi
-float translateX = 0.0f; // Posisi translasi di sumbu X
-float translateY = 0.0f; // Posisi translasi di sumbu Y
-float translateZ = 0.0f; // Posisi translasi di sumbu Z
+float translateX = 0.0f; // desti
+float translateY = 0.0f; // desti
+float translateZ = 0.0f; // desti
 
 // Variabel untuk rotasi
-float rotateX = 0.0f;
-float rotateY = 0.0f;
+float rotateX = 0.0f; //ai
+float rotateY = 0.0f; //ai
 
 // setting pencahayaan kipas angin
-GLfloat ambient_light[]={0.0,0.0,0.15,1.0};
-GLfloat source_light[]={0.9,0.5,0.7,1.0};
-GLfloat light_pos[]={3.0,0.0,6.0,1.0};
+GLfloat ambient_light[]={0.0,0.0,0.15,1.0}; //ai
+GLfloat source_light[]={0.9,0.5,0.7,1.0}; //ai
+GLfloat light_pos[]={3.0,0.0,6.0,1.0}; //ai
 
-void cartesius() {
+void cartesius() { //ai
 	glBegin(GL_LINES);
-    
-
-    // Garis sumbu X (merah)
+     
     glColor3f(1.0, 0.0, 0.0); // Warna merah
-    glVertex3f(-100.0, 0.0, 0.0); // Dari titik (-50, 0, 0)
-    glVertex3f(100.0, 0.0, 0.0);  // Ke titik (50, 0, 0)
-
-    // Garis sumbu Y (hijau)
+    glVertex3f(-100.0, 0.0, 0.0); 
+    glVertex3f(100.0, 0.0, 0.0);  
+ 
     glColor3f(0.0, 1.0, 0.0); // Warna hijau
-    glVertex3f(0.0, -100.0, 0.0); // Dari titik (0, -50, 0)
-    glVertex3f(0.0, 100.0, 0.0);  // Ke titik (0, 50, 0)
+    glVertex3f(0.0, -100.0, 0.0); 
+    glVertex3f(0.0, 100.0, 0.0);  
 
-    // Garis sumbu Z (biru)
     glColor3f(0.0, 0.0, 1.0); // Warna biru
-    glVertex3f(0.0, 0.0, 100.0); // Dari titik (0, 0, -50)
-    glVertex3f(0.0, 0.0, -100.0);  // Ke titik (0, 0, 50)
+    glVertex3f(0.0, 0.0, 100.0); 
+    glVertex3f(0.0, 0.0, -100.0);  
 
     glEnd();
 }
 
-void hiddencarte(){
+void hiddencarte(){ //ai
 	if (hidden){
 		cartesius();
 	}
 }
 
-void Cube() {
+void Cube() { //desti
     glPushMatrix(); 
 	glDisable(GL_LIGHTING);
-    glScalef(scaleCube, scaleCube, scaleCube); // Terapkan skala pada kubus
-	glBegin(GL_QUADS); // Memulai menggambar kubus
+    glScalef(scaleCube, scaleCube, scaleCube); //skala
+	glBegin(GL_QUADS); 
 	
     glColor3f(1.0, 0.0, 0.0); // Merah
     glVertex3f(-1.0, -1.0,  1.0);
@@ -126,16 +120,14 @@ void Cube() {
 }
 
 
-void meja(){
-	// mengatur transformasi
+void meja(){ //desti
 	glPushMatrix();
-	glTranslatef(translateX, translateY, translateZ);
-	glRotatef(rotateX, 1.0f, 0.0f, 0.0f); // rotasi di sumbu X
-	glRotatef(rotateY, 0.0f, 1.0f, 0.0f); // rotasi di sumbu Y
+	glTranslatef(translateX, translateY, translateZ); //tranformasi
+	glRotatef(rotateX, 1.0f, 0.0f, 0.0f); 
+	glRotatef(rotateY, 0.0f, 1.0f, 0.0f); 
 	glScalef(scaleFactor, scaleFactor, scaleFactor); // skala
 	
-	// alas meja 
-	
+	// alas meja 	
 	glPushMatrix();
 	glColor3d(0.88, 0.72, 0.53);
 	glTranslated(0.0, 0.0, 0.0);
@@ -172,16 +164,13 @@ void meja(){
 	glPopMatrix();
 }
 
-void init(void)
+void init(void) //ai
 {
     glShadeModel(GL_SMOOTH);
     glViewport(0,0,screen_width,screen_height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(45.0f,(GLfloat)screen_width/(GLfloat)screen_height,1.0f,1000.0f);
-	gluLookAt(5.0, 5.0, 5.0,   // Posisi kamera (x,y,z)
-              0.0, 0.0, 0.0,   // Titik yang dilihat (x,y,z)
-              0.0, 1.0, 0.0);  // Vektor up (x,y,z
     glEnable(GL_DEPTH_TEST);
     glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     glEnable(GL_LIGHTING);
@@ -194,7 +183,7 @@ void init(void)
     
 }
 
-// fungsi untuk membuat objek tetap proporsional sewaktu layar di maximaze
+// fungsi proposional maximaze
 void resize(int width, int height)
 {
     screen_width=width;
@@ -209,9 +198,9 @@ void resize(int width, int height)
     glutPostRedisplay();
 }
 
-void display(void)
+void display(void) //ai
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // MEMBERSIHKAN LAYAR LATAR BELAKANG
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
@@ -226,7 +215,7 @@ void display(void)
  	Cube();   
     // Terapkan translasi berdasarkan posisi yang diperbarui
     glTranslatef(translateX, translateY, -10);
-    glScalef(scaleFactor, scaleFactor, scaleFactor); // Terapkan skala
+    glScalef(scaleFactor, scaleFactor, scaleFactor); 
     glRotatef(270, 1.0, 0.0, 0.0);
     
     kipas();
@@ -236,12 +225,11 @@ void display(void)
     glutSwapBuffers();
 }
 
-void kipas(){
+void kipas(){ //ai
 	glTranslatef(0.0, 0.0, 0.0);
+	
 	glPushMatrix();
-
-    cylinder(2.5, 1.5, 16); // silinder batang bawah 2
-    
+    cylinder(2.5, 1.5, 16); // silinder batang bawah 2 
 	cylinder(2.5, 2.5, 6); // silinder batang bawah 1
     glPushMatrix();
     glTranslatef(0.0, 0.0, 14);
@@ -289,10 +277,10 @@ void kipas(){
     cylinder(1, 0.5, 15); // silinder tonjolan di depan kipas
     glRotatef(270, 1.0, 0.0, 0.0);
     
-	if (Tolehpress == true) // press down turn left-right head button
-        cylinder(0.3, 0.5, 6); // silinder tonjolan di belakang
-    else // pull up turn left-right head button
-        cylinder(0.3, 0.5, 7);
+	if (Tolehpress == true) // tombol toleh
+        cylinder(0.3, 0.5, 6); // silinder menonjol dibelakang
+    else 
+        cylinder(0.3, 0.5, 7); ////tidak menoleh
    
     glRotatef(90, 1.0, 0.0, 0.0);
     glPushMatrix();
@@ -302,23 +290,17 @@ void kipas(){
     rotation_y += rotation_y_plus;
     if (rotation_y > 359) rotation_y = 0;
     glRotatef(rotation_y, 0.0, 0.0, 1.0);
-    bilah(3, 10, 3, 5); // bilah kipas(inner radius, outer radius, thickness, qty bilah)
+    bilah(3, 10, 3, 5); // bilah kipas (inner radius, outer radius, thickness, qty bilah)
     glPopMatrix();
     glPopMatrix();
     glPopMatrix();
     glRotatef(90, 1.0, 0.0, 0.0);
     glTranslatef(0.0, -1.0, -4);
-    blok(2, 7, 10); // blok di bawah / papan kontrol
+    blok(2, 7, 10); // blok dasar tombol
 
     // speed selection
     glTranslatef(-6, 1, 14);
     glRotatef(270, 1.0, 0.0, 0.0);
-    glTranslatef(2.0, 0.0, 0.0);
-    
-	glPushMatrix();
-    glRotatef(pressplus5, 1.0, 0.0,     0.0);
-    blok(0.5, 2, 2); // blok tombol off
-    glPopMatrix();
     glTranslatef(2.0, 0.0, 0.0);
     
 	glPushMatrix();
@@ -344,8 +326,6 @@ void kipas(){
     blok(0.5, 2, 2); // blok tombol speed 4
     glPopMatrix();
     pressplus5 = 0;
-
-    // end of speed selection
   
 }
 // membuat silinder
@@ -368,7 +348,7 @@ void cylinder(float rbase, float rtop, float height)
 }
 
 //membuat bilah kipas
-void bilah(float r_inner, float r_outer, float tebal, int batang)
+void bilah(float r_inner, float r_outer, float tebal, int batang) //ai
 {
     float i;
 	glPushMatrix();
@@ -389,7 +369,7 @@ void bilah(float r_inner, float r_outer, float tebal, int batang)
 }
 
 // method untuk membuat blok kipas angin
-void blok(float tebal, int ratiol, int ratiop)
+void blok(float tebal, int ratiol, int ratiop) //ai
 {
     float i, j;
     glPushMatrix();
@@ -406,8 +386,8 @@ void blok(float tebal, int ratiol, int ratiop)
     glPopMatrix();
 }
 
-// fungsi untuk interaksi user dengan objek melalui keyboard
-void keyboard_s(unsigned char key, int x,     int y)
+// fungsi keyboard
+void keyboard_s(unsigned char key, int x,     int y) //desti dan ai
 {
     if (rotation_y_plus != 0)
         direction = (rotation_y_plus / abs(rotation_y_plus));
@@ -531,9 +511,9 @@ void keyboard_s(unsigned char key, int x,     int y)
         scaleFactor += 0.1f; // meningkatkan skala
         break;
 
-    case 'x': // menurunkan skala (diganti dari 'd' ke 'x')
-        if (scaleFactor > 0.1f) // pastikan skala tidak negatif
-            scaleFactor -= 0.1f; // menurunkan skala
+    case 'x': //agar tidak bernilai negatif 
+        if (scaleFactor > 0.1f) 
+            scaleFactor -= 0.1f; 
         break;
 
     case 'w': // bergerak ke atas
@@ -574,7 +554,7 @@ void keyboard_s(unsigned char key, int x,     int y)
 }
 
 
-int main(int argc, char **argv)
+int main(int argc, char **argv) //desti
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
