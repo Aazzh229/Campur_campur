@@ -120,7 +120,7 @@ void Cube() { //desti
 }
 
 
-void meja(){ //desti
+void meja(){ // desti
 	glPushMatrix();
 	glTranslatef(translateX, translateY, translateZ); //tranformasi
 	glRotatef(rotateX, 1.0f, 0.0f, 0.0f); 
