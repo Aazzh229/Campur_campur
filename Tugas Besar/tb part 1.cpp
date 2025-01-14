@@ -387,9 +387,9 @@ void blok(float tebal, int ratiol, int ratiop) //ai
 }
 
 // fungsi keyboard
-void keyboard_s(unsigned char key, int x,     int y) //desti dan ai
+void keyboard_s(unsigned char key, int x,     int y)
 {
-    if (rotation_y_plus != 0)
+    if (rotation_y_plus != 0) //ai
         direction = (rotation_y_plus / abs(rotation_y_plus));
     else
         direction = -1;
@@ -507,7 +507,7 @@ void keyboard_s(unsigned char key, int x,     int y) //desti dan ai
         }
         break;
 
-    case 'i': // meningkatkan skala
+    case 'i': // skala desti
         scaleFactor += 0.1f; // meningkatkan skala
         break;
 
