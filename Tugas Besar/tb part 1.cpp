@@ -1,6 +1,4 @@
 #include <GL/glut.h>
-#include <math.h>
-#include <stdio.h>
 
 void cylinder(float rbase, float rtop, float height); //ai
 void blok(float tebal, int ratiol, int ratiop); // ai
@@ -12,17 +10,18 @@ int screen_width=600; // lebar screen ai
 int screen_height=400; // tinggi screen ai
 int button_up=0, button_down=0; // ai
 int Turn=0; //ai
-float scaleCube =70.0; //desti
-bool hidden = false; //ai
 
-double rotation_y=0, rotation_y_plus=-15, direction; // merubah rotasi ai
-double Rhead=0, Rheadplus=0; // ai
-double Angguk=0, Anggukplus=0; // ai
-double press=0, pressplus, pressplus1=180, pressplus2=0, pressplus3=0, pressplus4=0, pressplus5=0; //ai
+
+float rotation_y=0, rotation_y_plus=-15, direction; // merubah rotasi ai
+float Rhead=0, Rheadplus=0; // ai
+float Angguk=0, Anggukplus=0; // ai
+float press=0, pressplus, pressplus1=180, pressplus2=0, pressplus3=0, pressplus4=0, pressplus5=0; //ai
+float scaleCube =70.0; //desti
 
 bool Toleh = true, Tolehpress=true; //ai
 bool RightTurn=true; //ai
 bool speed1=true, speed2=false, speed3=false, speed4=false, speed5=false; //ai
+bool hidden = false; //ai
 
 // Variabel untuk skala
 float scaleFactor = 1.0; // desti
@@ -541,11 +540,11 @@ void keyboard_s(unsigned char key, int x,     int y)
     	if (scaleCube > 1.0f) // pastikan skala tidak negatif
             scaleCube -= 1.0f; 
             break;
-    case 'h':
+    case 'h': //ai
     	hidden= !hidden;
     	break;
     }
-    glutPostRedisplay();
+    glutPostRedisplay(); 
 }
 
 
