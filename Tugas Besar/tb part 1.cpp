@@ -125,10 +125,11 @@ void meja(){ //desti
 	glRotatef(rotateX, 1.0f, 0.0f, 0.0f); 
 	glRotatef(rotateY, 0.0f, 1.0f, 0.0f); 
 	glScalef(scaleFactor, scaleFactor, scaleFactor); // skala
+	glScalef(1.0, 1.0, 1.0); // Skala normal
 	
 	// alas meja 	
 	glPushMatrix();
-	glColor3d(0.88, 0.72, 0.53);
+	glColor3d(0.88, 0.72, 0.53); //coklat muda
 	glTranslated(0.0, 0.0, 0.0);
 	glScaled(1.5, 0.2, 1.6);
 	glutSolidCube(10);
@@ -208,10 +209,13 @@ void display(void) //ai
     glPopMatrix(); 
     
     glPushMatrix(); 
+    
  	Cube();   
+ 	 
     // Terapkan translasi berdasarkan posisi yang diperbarui
     glTranslatef(translateX, translateY, -10.0);  
-    glScalef(scaleFactor, scaleFactor, scaleFactor); 
+    glScalef(scaleFactor, scaleFactor, scaleFactor);
+	
     glRotatef(270, 1.0, 0.0, 0.0); 
     
     kipas();
@@ -556,7 +560,7 @@ int main(int argc, char **argv) //desti
     glutInitWindowPosition(100,100); //desti
     glutCreateWindow("Kipas Angin dan Meja 3D"); //desti
     glutDisplayFunc(display); //ai
-    glutIdleFunc(display); //ai, redisplay
+    glutIdleFunc(display); //ai
     glutReshapeFunc(resize); //ai
     glutKeyboardFunc(keyboard_s); //desti
     init();//ai
