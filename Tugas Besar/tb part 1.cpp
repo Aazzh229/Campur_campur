@@ -14,7 +14,6 @@ int Turn=0; //ai
 
 float rotation_y=0, rotation_y_plus=-15, direction; // merubah rotasi ai
 float Rhead=0, Rheadplus=0; // ai
-float Angguk=0, Anggukplus=0; // ai
 float press=0, pressplus, pressplus1=0, pressplus2=0, pressplus3=0, pressplus4=0, pressplus5=0; //ai
 float scaleCube =70.0; //desti
 
